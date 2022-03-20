@@ -5,6 +5,7 @@ const app = express();
 const Joi = require("joi");
 const employees = require('./router/employees');
 const users = require('./router/users');
+const auth = require('./router/auth');
 const logging = require('./logger/logging');
 const helmet = require('helmet');
 const morgan = require('morgan');
@@ -27,6 +28,7 @@ if(app.get('env') === 'development'){
     app.use(morgan('tiny'));
     app.use('/api/employees', employees);
     app.use('/api/users', users);
+    app.use('/api/auth', auth);
 }
 
 
