@@ -1,24 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
-const Joi = require('joi');
-const employeeSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true,
-        minlength: 3,
-        maxlength: 44
-    },
-    salary: {
-        type: Number,
-        required: true
-    }
-
-});
-
-const Employee = mongoose.model('Employee', employeeSchema);
-
-
+const {Employee, validate, validateUpdate} = require('../model/employee')
 
 
 router.get('/', async (req, res)=>{
@@ -71,20 +53,7 @@ router.delete('/:id', async (req, res)=> {
     res.send(emp);
 });
 
-function validate(employee) {
-    const schema = {
-        name: Joi.string().min(3).required(),
-        salary: Joi.number().integer().required()
-    }
-    return Joi.validate(employee, schema);
-}
-function validateUpdate(employee) {
-    const schema = {
-        name: Joi.string().min(3).required(),
-        salary: Joi.number().integer().required()
-    }
-    return Joi.validate(employee, schema);
-}
+
 
 
 
