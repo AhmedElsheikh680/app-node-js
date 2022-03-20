@@ -10,6 +10,7 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const _ = require('lodash');
+const bcrypt = require('bcrypt');
 
 //Connect To DB
 mongoose.connect('mongodb://localhost/mycompany',{
