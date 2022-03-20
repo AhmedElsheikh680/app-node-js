@@ -4,17 +4,26 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "index.js"
   },
+  "engines": {
+    "node": "v16.14.0"
+  },
+
   "author": "",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.1",
     "express": "^4.17.3",
+    "express-async-errors": "^3.1.1",
     "helmet": "^5.0.2",
     "joi": "^14.3.1",
+    "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
     "mongoose": "^6.2.7",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "winston": "^3.6.0",
+    "winston-mongodb": "^5.0.7"
   }
 }

@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const Joi = require('joi');
 const {User} = require('../model/user');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 //login
 router.post('/', async (req, res)=>{
@@ -21,7 +22,8 @@ router.post('/', async (req, res)=>{
     if(!checkPassword) {
         return res.status(404).send('Invalid Email OR Password!!');
     }
-    res.send('OK');
+    const token = user.generateTokens();
+    res.send(token);
 
 });
 

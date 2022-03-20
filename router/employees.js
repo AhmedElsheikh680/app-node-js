@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const {Employee, validate, validateUpdate} = require('../model/employee')
+const {Employee, validate, validateUpdate} = require('../model/employee');
+const auth = require('../middleware/auth');
+const admin = require('../middleware/admin');
 
 
 router.get('/', async (req, res)=>{
@@ -8,15 +10,29 @@ router.get('/', async (req, res)=>{
     res.send(emps);
 });
 
-router.get('/:id', async (req, res)=>{
-    const emp =  await Employee.findById(req.params.id);
-    if(!emp){
-        return res.status(404).send('This Employee Not Found!!');
-    }
-    res.send(emp);
+//pagination
+router.get('/pages', async (req, res)=>{
+   const {page=1, limit=10} = req.query;
+   const emps = await Employee.find()
+       .sort('name')
+       .limit(limit * 1)
+       .skip((page -1) * limit).exec();
+   res.send(emps);
 });
 
-router.post('/', async (req, res)=>{
+router.get('/:id', async (req, res)=>{
+   try {
+       const emp =  await Employee.findById(req.params.id);
+       if(!emp){
+           return res.status(404).send('This Employee Not Found!!');
+       }
+       res.send(emp);
+   }catch(error) {
+       res.send('This Employee Not Found!!');
+   }
+});
+
+router.post('/', auth,async (req, res)=>{
 
     const {error} = validate(req.body);
     if(error) {
@@ -45,7 +61,7 @@ router.put('/:id', async (req, res)=>{
     return res.send(emp);
 });
 
-router.delete('/:id', async (req, res)=> {
+router.delete('/:id', [auth,admin] ,async (req, res)=> {
     const emp = await Employee.findByIdAndRemove(req.params.id);
     if(!emp) {
         return  res.status(404).send('Employee Not Found!!');
