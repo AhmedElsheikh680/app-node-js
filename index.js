@@ -1,11 +1,20 @@
-const Joi = require("joi");
+// const Joi = require("joi");
 const express = require('express');
-const {string} = require("joi");
+
 const app = express();
+const Joi = require("joi");
 const employees = require('./employees/employees');
 const logging = require('./logger/logging');
 const helmet = require('helmet');
 const morgan = require('morgan');
+const mongoose = require('mongoose');
+
+//Connect To DB
+mongoose.connect('mongodb://localhost/mycompany',{
+    useNewurlParser: true
+}).
+then(()=> console.log('Connect To DB Successfully...'))
+    .catch((error)=> console.error('Connection Failed!!'+ error));
 
 
 app.use(express.json());
