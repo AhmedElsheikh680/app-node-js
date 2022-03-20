@@ -3,11 +3,13 @@ const express = require('express');
 
 const app = express();
 const Joi = require("joi");
-const employees = require('./employees/employees');
+const employees = require('./router/employees');
+const users = require('./router/users');
 const logging = require('./logger/logging');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+const _ = require('lodash');
 
 //Connect To DB
 mongoose.connect('mongodb://localhost/mycompany',{
@@ -23,6 +25,7 @@ if(app.get('env') === 'development'){
     app.use(helmet());
     app.use(morgan('tiny'));
     app.use('/api/employees', employees);
+    app.use('/api/users', users);
 }
 
 

@@ -17,6 +17,7 @@ const employeeSchema = new mongoose.Schema({
 });
 
 const Employee = mongoose.model('Employee', employeeSchema);
+
 function validate(employee) {
     const schema = {
         name: Joi.string().min(3).required(),
